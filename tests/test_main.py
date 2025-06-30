@@ -1,5 +1,5 @@
-import pytest
 from fastapi.testclient import TestClient
+
 from src.main import app
 
 client = TestClient(app)
@@ -34,7 +34,7 @@ def test_update_task():
     task_data = {"title": "Task to Update", "description": "Original description"}
     create_response = client.post("/tasks", json=task_data)
     task_id = create_response.json()["id"]
-    
+
     # Update the task
     update_data = {"title": "Updated Task", "completed": True}
     response = client.put(f"/tasks/{task_id}", json=update_data)
@@ -48,12 +48,12 @@ def test_delete_task():
     task_data = {"title": "Task to Delete"}
     create_response = client.post("/tasks", json=task_data)
     task_id = create_response.json()["id"]
-    
+
     # Delete the task
     response = client.delete(f"/tasks/{task_id}")
     assert response.status_code == 200
     assert response.json() == {"message": "Task deleted successfully"}
-    
+
     # Verify task is deleted
     get_response = client.get(f"/tasks/{task_id}")
     assert get_response.status_code == 404

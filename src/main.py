@@ -1,8 +1,9 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import List, Optional
 import uuid
 from datetime import datetime
+from typing import Optional
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
 app = FastAPI(title="Task Management API", version="1.0.0")
 
@@ -22,13 +23,13 @@ class TaskUpdate(BaseModel):
     description: Optional[str] = None
     completed: Optional[bool] = None
 
-tasks: List[Task] = []
+tasks: list[Task] = []
 
 @app.get("/")
 def read_root():
     return {"message": "Task Management API", "version": "1.0.0"}
 
-@app.get("/tasks", response_model=List[Task])
+@app.get("/tasks", response_model=list[Task])
 def get_tasks():
     return tasks
 
